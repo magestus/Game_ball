@@ -67,6 +67,7 @@ def mouse_click(event):
               main_ball.dy = -main_ball.dy
 
 def create_list_of_balls(number):
+    global lst
     lst = []
     while len(lst) < number:
         for i in range(number):
@@ -80,7 +81,14 @@ def create_list_of_balls(number):
 def main():
     if 'main_ball' in globals():
         main_ball.move()
+        if len(lst) == 0:
+            canvas.create_text(WIDTH/2, HEIGHT/2, text='YOU WON', font='Arial 20', fill='red')
+            main_ball.hide()
+            main_ball.dx = main_ball.y = 0
+            
+            
     root.after(1, main)
+
 
 
 root = tkinter.Tk()
@@ -92,7 +100,7 @@ canvas.bind('<Button-2>', mouse_click, '+')
 canvas.bind('<Button-3>', mouse_click, '+')
 if 'main_ball' in globals():
     del main_ball
-balls = create_list_of_balls(10)
+balls = create_list_of_balls(1)
 main()
 root.mainloop()
 
