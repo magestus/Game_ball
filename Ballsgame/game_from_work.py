@@ -6,7 +6,7 @@ import random
 WIDTH=640
 HEIGHT=480
 BG_COLOR='white'
-color_list = ['green', 'yellow', 'aqua', 'purple']
+color_list = ['green', 'yellow', 'aqua', 'purple', 'blue', 'chartreuse']
 
 ##Class
 class Ball():
@@ -19,16 +19,29 @@ class Ball():
         self.dy = dy
 
     def draw(self):
-        canvas.create_oval(self.x + self.r, self.y + self.r, self.x - self.r, self.y - self.r, fill=self.color)
+        canvas.create_oval(self.x + self.r, self.y + self.r, self.x - self.r, self.y - self.r, fill=self.color, outline=self.color)
 
     def hide(self):
         canvas.create_oval(self.x + self.r, self.y + self.r, self.x - self.r, self.y - self.r, fill=BG_COLOR, outline=BG_COLOR)
 
+    def is_collision(self, ball):
+        a = abs(self.x + self.dx - ball.x)
+        b = abs(self.y + self.dy - ball.y)
+        return (a*a + b*b) **0.5 <= self.r + ball.r
+
     def move(self):
+        # Stolknovenie so stenami
         if (self.x + self.r + self.dx >= WIDTH) or (self.x - self.r + self.dx <= 0):
             self.dx = -self.dx
         if (self.y + self.r + self.dy >= HEIGHT) or (self.y - self.r + self.dy <= 0):
             self.dy = -self.dy
+        # Stolknovenie s sharami
+        for ball in balls:
+            if self.is_collision(ball):
+                ball.hide()
+                balls.remove(ball)
+                self.dx = -self.dx
+                self.dy = -self.dy
         self.hide()
         self.x += self.dx
         self.y += self.dy 
@@ -60,6 +73,7 @@ def create_list_of_balls(number):
             rnd_ball = Ball(random.choice(range(0, WIDTH)), random.choice(range(0,HEIGHT)), random.randint(20,25), random.choice(color_list))
             lst.append(rnd_ball)
             rnd_ball.draw()
+    return lst
 
         
 ## main_cicle_game
@@ -78,7 +92,7 @@ canvas.bind('<Button-2>', mouse_click, '+')
 canvas.bind('<Button-3>', mouse_click, '+')
 if 'main_ball' in globals():
     del main_ball
-create_list_of_balls(10)
+balls = create_list_of_balls(10)
 main()
 root.mainloop()
 
