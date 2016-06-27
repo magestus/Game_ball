@@ -6,7 +6,8 @@ import random
 WIDTH=640
 HEIGHT=480
 BG_COLOR='white'
-color_list = ['green', 'yellow', 'aqua', 'purple', 'blue', 'chartreuse']
+BAD_COLOR='red'
+color_list = ['green', 'yellow', 'aqua', 'purple', 'blue', 'red']
 
 ##Class
 class Ball():
@@ -38,10 +39,13 @@ class Ball():
         # Stolknovenie s sharami
         for ball in balls:
             if self.is_collision(ball):
-                ball.hide()
-                balls.remove(ball)
-                self.dx = -self.dx
-                self.dy = -self.dy
+                if ball.color != BAD_COLOR:
+                    ball.hide()
+                    balls.remove(ball)
+                    self.dx = -self.dx
+                    self.dy = -self.dy
+                else:
+                    self.dx = self.dy = 0
         self.hide()
         self.x += self.dx
         self.y += self.dy 
@@ -53,7 +57,7 @@ def mouse_click(event):
     print(event.num, event.x, event.y)
     if event.num == 1:
         if 'main_ball' not in globals():
-            main_ball = Ball(event.x, event.y, 30, 'red', 1, 1)
+            main_ball = Ball(event.x, event.y, 30, 'blue', 1, 1)
             main_ball.draw()
         else:
             if main_ball.dx * main_ball.dy > 0:
@@ -100,7 +104,7 @@ canvas.bind('<Button-2>', mouse_click, '+')
 canvas.bind('<Button-3>', mouse_click, '+')
 if 'main_ball' in globals():
     del main_ball
-balls = create_list_of_balls(1)
+balls = create_list_of_balls(10)
 main()
 root.mainloop()
 
