@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ef616ac-8e5a-4b90-a371-67af348ac134</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>game_from_work.py</StartupFile>
+    <StartupFile>module2.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
