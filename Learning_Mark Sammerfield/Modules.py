@@ -18,4 +18,4 @@ def clear(text, whitespace=string.whitespace, delete=''):
        return " ".join(result)
  
 
-   print(clear('nichosi', delete = 'i'))
+   print(clear('nichosi', delete = 'iiiiii'))
