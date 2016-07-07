@@ -11,3 +11,5 @@ add_text(8, 10, "This is the CharGrid module")
 add_text(1, 32, "Pleasantville", "@")
 add_rectangle(6, 42, 11, 46, fill=True)
 render(False)
+
+print
